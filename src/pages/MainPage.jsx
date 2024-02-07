@@ -277,7 +277,7 @@ const MainPage = () => {
           >
             <Typography variant="h6">
               {translations["stage1.title"]}(
-              {opportunitiesData.lead_stage_count})
+              {handleFilterCardData("lead").length})
             </Typography>
             <button className="add-opportunity-btn" onClick={handleOpen}>
               {translations["header.addOpportunity"]}
@@ -305,7 +305,7 @@ const MainPage = () => {
             <Typography variant="h6">
               {" "}
               {translations["stage2.title"]}(
-              {opportunitiesData.qualified_stage_count})
+              {handleFilterCardData("qualified").length})
             </Typography>
           </Box>
           <CardBlock
@@ -329,7 +329,7 @@ const MainPage = () => {
           >
             <Typography>
               {translations["stage3.title"]}(
-              {opportunitiesData.booked_stage_count})
+              {handleFilterCardData("booked").length})
             </Typography>
           </Box>
           <CardBlock
@@ -354,7 +354,7 @@ const MainPage = () => {
             {" "}
             <Typography variant="h6">
               {translations["stage4.title"]}(
-              {opportunitiesData.treated_stage_count})
+              {handleFilterCardData("treated").length})
             </Typography>
           </Box>
           <CardBlock
