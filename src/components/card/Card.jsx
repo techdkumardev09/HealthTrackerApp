@@ -76,9 +76,6 @@ const CardBlock = ({
       //   return { stage_name: item.stage_name, timestamp: item.timestamp };
       // }),
     };
-
-    debugger;
-
     axios
       .put(`${baseUrl}/opportunities/${updateData.id}`, updateEditData)
       .then((response) => {

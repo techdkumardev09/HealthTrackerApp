@@ -233,8 +233,6 @@ const MainPage = () => {
         stage_history: formData.stage_history
       },
     };
-    console.log("formData", data);
-    debugger
     try {
       const response = await axios.post(`${baseUrl}/opportunities`, data);
       console.log("success", response);
