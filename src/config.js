@@ -1,0 +1,1 @@
+export const baseUrl = "https://pulse-app-t8x4.onrender.com"

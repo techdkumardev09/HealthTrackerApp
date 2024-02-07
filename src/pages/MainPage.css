@@ -1,0 +1,117 @@
+/* HorizontalLayout.css */
+
+
+
+.horizontal-layout {
+    display: flex;
+    height: max-content;
+    margin: 0px 7px;
+    max-width: 1596px;
+    
+  }
+  
+  .section {
+    width: 33.3%;
+    background-color: #f0f0f0;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    height: fit-content;
+    font-weight: "600"
+  }
+  
+  .add-opportunity-btn {
+    background-color: #0d99ff;
+    color: #fff;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 15px;
+  }
+
+
+/* Style for the popup container */
+.popup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+/* Style for the popup header */
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 0px;
+}
+
+/* Style for the close button */
+.close-popup-btn {
+  cursor: pointer;
+  padding: 5px;
+  background-color: transparent;
+  border: none;
+}
+
+/* Additional styling for the content */
+.popup-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; 
+}
+
+/* Additional styling for the form fields */
+.popup-content input,
+.popup-content select {
+  width: 100%;
+}
+
+.save_member{
+  background-color: #0d99ff;
+
+}
+
+@media (max-width: 1024px) {
+    .horizontal-layout {
+        max-width: 100%;  
+        overflow-y: auto;
+        width: 100%;   
+    }
+    .horizontal-layout .section {
+        min-width: 33.3%
+    }
+}
+
+@media (max-width: 768px) {
+    body header {
+        display: none !important;
+    }
+    .horizontal-layout .section {
+        min-width: 45%;
+        width: 45%;
+    }
+    .navbar-container {
+        display: block !important;
+    } 
+    .navbar-container h1 {
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+    }
+    .search-input {
+        width: 95% !important;
+    }
+}
+
+@media (max-width: 550px) {
+    .horizontal-layout .section {
+        min-width: 88%;
+        width: 88%;
+    }
+}

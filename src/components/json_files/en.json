@@ -1,0 +1,30 @@
+{
+    "navbar.title": "Patients",
+    "navbar.addMember": "Add Member",
+    "search.placeholder": "Search...", 
+    "stage1.title": "Leads",
+    "stage2.title": "Qualified",
+    "stage3.title": "Booked",
+    "stage4.title": "Treated", 
+    "header.addOpportunity": "Add Opportunity", 
+    "image.message": " Click to Upload Image", 
+    "image.SuccMessage": " Succussfully Uploaded",
+    "memFirstName": "First Name",
+    "memLastName": " Last Name",
+    "memGender": " Gender",
+    "memSave": " Save",
+    "male": " Male",
+    "female": " Female",
+    "doctor": " Doctor",
+    "patient": " Patient",
+    "pro_name": " Procedure_Name",
+    "pat_Id": "Patient_ID ",  
+    "no_pat": "  No Patients Available",
+    "doc_Id": " Doctor_ID",
+    "no_doc": " No Doctor Available"
+
+
+
+
+
+  }
