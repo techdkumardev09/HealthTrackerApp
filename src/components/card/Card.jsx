@@ -71,10 +71,10 @@ const CardBlock = ({
 
     const updateEditData = {
       procedure_name: updateData.procedure_name,
-      doctor_id: updateData.doctor.id,
-      stage_history: updateData.stage_history.map((item) => {
-        return { stage_name: item.stage_name, timestamp: item.timestamp };
-      }),
+      // doctor_id: updateData.doctor.id,
+      // stage_history: updateData.stage_history.map((item) => {
+      //   return { stage_name: item.stage_name, timestamp: item.timestamp };
+      // }),
     };
 
     debugger;
@@ -84,7 +84,7 @@ const CardBlock = ({
       .then((response) => {
         // console.log("success", response.data);
         console.log(updateData);
-        setOpportunitiesData(updateData);
+        // setOpportunitiesData(updateData);
         console.log(opportunitiesData.data);
         loadNextApi();
       })
@@ -99,10 +99,10 @@ const CardBlock = ({
     setLoading(true);
 
     axios
-      .patch(`${baseUrl}/opportunities/${item.id}/move_to_next_stage`)
+      .patch(`${baseUrl}/opportunities/${item.id}/update_stage_history`)
       .then((response) => {
-        console.log("success", response);
-        setLoading(false);
+      console.log("success", response);
+        setLoading(false);  
         loadNextApi();
       })
       .catch((error) => {
@@ -174,14 +174,16 @@ const CardBlock = ({
                 style={{textAlign: "left", fontSize: "16px", fontWeight: "bold"}}
                 color="black"
               >
-                Hello boss
+                {item.patient.full_name}
+                {/* Hello boss */}
               </Typography>
               <Typography
                 variant="h6"
                 style={{ fontSize: "14px" }}
                 color="black"
               >
-                male, 24 year old
+                {item.patient.gender}, {item.patient.age} years old
+                {/* male, 24 year old */}
               </Typography>
             </Box>
           </Box>
@@ -198,13 +200,15 @@ const CardBlock = ({
                   style={{textAlign: "start", fontSize: "16px", lineHeight: "1.2"}}
                   color="black"
                 >
-                  Tummy Three
+                  {item.procedure_name}
+                  {/* Tummy Three */}
                 </Typography>
                 <Typography
                   variant="h6"
                   style={{textAlign: "start", fontSize: "15px"}}
                   color="black"
                 >
+                  Dr. {item.doctor.full_name}
                   {/* Dr Harry Master */}
                 </Typography>
                 {item.stage_history &&
@@ -293,7 +297,7 @@ const CardBlock = ({
           variant="outlined"
           type="date"
           fullWidth
-          value={new Date(`${selectedDate}`)}
+          value={selectedDate}
           onChange={(e) => {
             handeUpdateEditTimeStamp(e.target.value);
             setSelectedDate(e.target.value);

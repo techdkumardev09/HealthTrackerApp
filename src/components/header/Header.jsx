@@ -46,11 +46,9 @@ const Header = ({ setOpportunitiesData, loadNextApi }) => {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.post(`${baseUrl}/opportunities/search`, {
-        query: searchText,
-      });
+      const response = await axios.post(`${baseUrl}/opportunities?search=${searchText}`)
       console.log("success", response.data.data);
-      setOpportunitiesData(response.data);
+      // setOpportunitiesData(response.data);
     } catch (error) {
       console.error("error", error);
     }
@@ -274,7 +272,7 @@ const Header = ({ setOpportunitiesData, loadNextApi }) => {
           {/* Form groups for First Name, Last Name, Role, Gender, and Date of Birth */}
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <TextField
-              label={translations["image.SuccMessage"]}
+              label={translations["memFirstName"]}
               variant="outlined"
               onChange={(e) => handleFieldChange("firstName", e.target.value)}
               error={Boolean(validationErrors.firstName)}
