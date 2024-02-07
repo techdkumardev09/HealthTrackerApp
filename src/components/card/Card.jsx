@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import enTranslations from "../json_files/en.json";
 import esTranslations from "../json_files/es.json";
 import { useLanguage } from "../../context/LanguageContext";
-
+import avtarP from "./avtarP.jpg"
 import {
   Typography,
   Box,
@@ -71,7 +71,7 @@ const CardBlock = ({
 
     const updateEditData = {
       procedure_name: updateData.procedure_name,
-      // doctor_id: updateData.doctor.id,
+      doctor_id: updateData.doctor.id,
       // stage_history: updateData.stage_history.map((item) => {
       //   return { stage_name: item.stage_name, timestamp: item.timestamp };
       // }),
@@ -99,7 +99,7 @@ const CardBlock = ({
     setLoading(true);
 
     axios
-      .patch(`${baseUrl}/opportunities/${item.id}/update_stage_history`)
+      .post(`${baseUrl}/opportunities/${item.id}/update_stage_history`)
       .then((response) => {
       console.log("success", response);
         setLoading(false);  
@@ -159,9 +159,9 @@ const CardBlock = ({
         >
           <Box display={"flex"} flexDirection={"row"} padding={'10px 10px'}>
             <Avatar
-              src={item.patient.avatar_url}
+              src={item.patient.avatar_url || avtarP}
               alt="image"
-              sx={{ bgcolor: red[500], height: '50px', width: '50px'}}
+              sx={{ bgcolor: "#FFFAF0", height: '50px', width: '50px'}}
               aria-label="recipe"
             ></Avatar>
             <Box
@@ -231,9 +231,9 @@ const CardBlock = ({
               </Box>
               <Box display={"flex"} flexDirection={"column"} gap={"5px 0px"}>
                 <Avatar
-                  src={item.doctor.avatar_url}
+                  src={item.doctor.avatar_url || avtarP}
                   alt="image"
-                  sx={{ height: "28px", width: "28px", bgcolor: red[500] }}
+                  sx={{ height: "28px", width: "28px", bgcolor: '#FFFAF0' }}
                   aria-label="recipe"
                 ></Avatar>
                 <SkipNextIcon onClick={() => handleNextButton(item)} />
@@ -293,7 +293,7 @@ const CardBlock = ({
           )}
         </Select>
 
-        <TextField
+        {/* <TextField
           variant="outlined"
           type="date"
           fullWidth
@@ -302,9 +302,8 @@ const CardBlock = ({
             handeUpdateEditTimeStamp(e.target.value);
             setSelectedDate(e.target.value);
           }}
-        />
+        /> */}
       </DialogContent>
-      {console.log(updateData, "dvcsfidhvdifugvbdf")}
       <Box sx={{ p: 2, display: "flex", justifyContent: "flex-end" }}>
         <Button onClick={handleUpdatePopup} variant="contained">
           Update

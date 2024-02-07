@@ -46,9 +46,9 @@ const Header = ({ setOpportunitiesData, loadNextApi }) => {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.post(`${baseUrl}/opportunities?search=${searchText}`)
+      const response = await axios.get(`${baseUrl}/opportunities?search=${searchText}`)
       console.log("success", response.data.data);
-      // setOpportunitiesData(response.data);
+      setOpportunitiesData(response.data);
     } catch (error) {
       console.error("error", error);
     }
