@@ -22,7 +22,7 @@ import {
   Avatar,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { lightBlue } from "@mui/material/colors";
+import { lightBlue, red } from "@mui/material/colors";
 import PersonAddRoundedIcon from "@mui/icons-material/PersonAddRounded";
 import SearchIcon from "@mui/icons-material/Search";
 const Header = ({ setOpportunitiesData, loadNextApi }) => {
@@ -40,12 +40,14 @@ const Header = ({ setOpportunitiesData, loadNextApi }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
   const [validationErrors, setValidationErrors] = useState({});
-
+  const [imageErrors, setImageErrors] = useState(false);
   const [searchText, setSearchText] = useState("");
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get(`${baseUrl}/opportunities?search=${searchText}`)
+      const response = await axios.get(
+        `${baseUrl}/opportunities?search=${searchText}`
+      );
       console.log("success", response.data.data);
       setOpportunitiesData(response.data);
     } catch (error) {
@@ -107,37 +109,51 @@ const Header = ({ setOpportunitiesData, loadNextApi }) => {
 
   const handleSave = async () => {
     // Create FormData object to send member data
-    const addMemberData = new FormData();
-    addMemberData.append("member[first_name]", formData.firstName);
-    addMemberData.append("member[last_name]", formData.lastName);
-    addMemberData.append("member[gender]", formData.gender);
-    addMemberData.append("member[age]", formData.age);
-    addMemberData.append("member[role]", formData.role);
-    addMemberData.append("member[avatar]", formData.Image, "file");
-    
-    try {
-      // Send POST request to save member data
-      const response = await axios.post(`${baseUrl}/members`, addMemberData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      loadNextApi();
-      closeModal();
-    } catch (error) {
-      console.error("error", error);
-    }
-    const errors = {};
+    setImageErrors(false);
+    if (formData.Image) {
+      const addMemberData = new FormData();
+      addMemberData.append("member[first_name]", formData.firstName);
+      addMemberData.append("member[last_name]", formData.lastName);
+      addMemberData.append("member[gender]", formData.gender);
+      addMemberData.append("member[age]", formData.age);
+      addMemberData.append("member[role]", formData.role);
+      addMemberData.append("member[avatar]", formData?.Image, "file");
 
-    const requiredFields = ["firstName", "lastName", "role", "gender", "dateOfBirth", "Image"];
-    requiredFields.forEach(field => {
-      if (!formData[field]) {
-        errors[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
+      try {
+        // Send POST request to save member data
+        const response = await axios.post(`${baseUrl}/members`, addMemberData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+        loadNextApi();
+        closeModal();
+      } catch (error) {
+        console.error("error", error);
       }
-    });
-    if (Object.keys(errors).length > 0) {
-      setValidationErrors(errors);
-      return;
+      const errors = {};
+
+      const requiredFields = [
+        "firstName",
+        "lastName",
+        "role",
+        "gender",
+        "dateOfBirth",
+        "Image",
+      ];
+      requiredFields.forEach((field) => {
+        if (!formData[field]) {
+          errors[field] = `${
+            field.charAt(0).toUpperCase() + field.slice(1)
+          } is required`;
+        }
+      });
+      if (Object.keys(errors).length > 0) {
+        setValidationErrors(errors);
+        return;
+      }
+    } else {
+      setImageErrors(true);
     }
   };
 
@@ -152,7 +168,7 @@ const Header = ({ setOpportunitiesData, loadNextApi }) => {
             </button>
             <Box display={"flex"}>
               <div
-              className="search-input"
+                className="search-input"
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -189,7 +205,16 @@ const Header = ({ setOpportunitiesData, loadNextApi }) => {
       <Modal open={isModalOpen} onClose={closeModal}>
         <Container
           maxWidth="sm"
-          sx={{ mt: 1, p: 1, bgcolor: "background.paper", borderRadius: 2, position: 'absolute', top: '50%', transform: 'translate(-50%, -50%)', left: '50%' }}
+          sx={{
+            mt: 1,
+            p: 1,
+            bgcolor: "background.paper",
+            borderRadius: 2,
+            position: "absolute",
+            top: "50%",
+            transform: "translate(-50%, -50%)",
+            left: "50%",
+          }}
         >
           <Box
             sx={{ display: "flex", justifyContent: "flex-end", mb: -2, mr: -2 }}
@@ -213,7 +238,13 @@ const Header = ({ setOpportunitiesData, loadNextApi }) => {
               onChange={handleImageChange}
               error={Boolean(validationErrors.Image)}
               helperText={validationErrors.Image}
+              required
             />
+            {imageErrors && (
+              <Box sx={{ mr: 40, mt: 1 }}>
+                <Typography sx={{color : red[500]}}>Please upload image</Typography>
+              </Box>
+            )}
             {formData.Image ? (
               <>
                 <Box
@@ -271,6 +302,7 @@ const Header = ({ setOpportunitiesData, loadNextApi }) => {
           {/* Form groups for First Name, Last Name, Role, Gender, and Date of Birth */}
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <TextField
+              required
               label={translations["memFirstName"]}
               variant="outlined"
               onChange={(e) => handleFieldChange("firstName", e.target.value)}

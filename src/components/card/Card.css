@@ -1,6 +1,7 @@
 .card-body{
     background-color: rgb(179, 227, 247);
     padding: 8px;
+    min-height: 110px;
 }
 .box-1{
     font-size: 14px;

@@ -4,6 +4,7 @@ import enTranslations from "../json_files/en.json";
 import esTranslations from "../json_files/es.json";
 import { useLanguage } from "../../context/LanguageContext";
 import avtarP from "./avtarP.jpg"
+import { Audio } from 'react-loader-spinner'
 import {
   Typography,
   Box,
@@ -30,6 +31,7 @@ const CardBlock = ({
     loadNextApi,
     opportunitiesData,
     doctorData,
+    flag
   }) => {
     const { language } = useLanguage();
   const translations = language === "es" ? esTranslations : enTranslations;
@@ -125,14 +127,6 @@ const CardBlock = ({
     });
   };
 
-  const handeUpdateEditTimeStamp = (updatedDate) => {
-    setUpdateData((prev) => ({
-      ...prev,
-      stage_history: [
-        { ...prev.stage_history, timestamp: moment(updatedDate).format("lll") },
-      ],
-    }));
-  };
   return (
     <>
     {loading && <p>Loading...</p>}
@@ -226,8 +220,9 @@ const CardBlock = ({
                   sx={{ height: "28px", width: "28px", bgcolor: '#FFFAF0' }}
                   aria-label="recipe"
                 ></Avatar>
-                <SkipNextIcon onClick={() => handleNextButton(item)} />
-                <EditIcon onClick={() => handleOpenPopup(item)} />
+                {flag &&<SkipNextIcon onClick={() => handleNextButton(item)} />}
+                {!flag && <EditIcon sx={{marginTop: "50px"}}onClick={() => handleOpenPopup(item)} /> }
+                {flag &&<EditIcon onClick={() => handleOpenPopup(item)} /> }
                 {/* <DeleteIcon onClick={() => handleDeleteButton(item)}>
                   {" "}
                   <CloseIcon />

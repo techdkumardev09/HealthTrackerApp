@@ -17,7 +17,7 @@
     padding: 10px;
     border-radius: 8px;
     height: fit-content;
-    font-weight: "600"
+    font-weight: "600";
   }
   
   .add-opportunity-btn {
@@ -76,7 +76,13 @@
   background-color: #0d99ff;
 
 }
-
+.selectBox{
+  max-height: 100px;
+}
+.loder{
+  display: flex;
+  justify-content: center;
+}
 @media (max-width: 1024px) {
     .horizontal-layout {
         max-width: 100%;  

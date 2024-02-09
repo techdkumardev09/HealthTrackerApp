@@ -3,7 +3,7 @@ import axios from "axios";
 import enTranslations from "../components/json_files/en.json";
 import esTranslations from "../components/json_files/es.json";
 import { useLanguage } from "../context/LanguageContext";
-
+import { Oval } from "react-loader-spinner";
 import "./MainPage.css";
 import {
   Button,
@@ -26,7 +26,16 @@ import { baseUrl } from "../config";
 import Header from "../components/header/Header";
 import CardBlock from "../components/card/Card";
 // import Header from "../Header/Header";
-
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 const MainPage = () => {
   const { language } = useLanguage();
   const initialFormData = {
@@ -47,15 +56,18 @@ const MainPage = () => {
   const [patientData, setPatientData] = useState({});
   const [doctorData, setDoctorData] = useState({});
   const [formData, setFormData] = useState(initialFormData);
+  const [loderFlags, setLoderFlags] = useState(false);
 
   const loadNextApi = async () => {
+    setLoderFlags(true);
     try {
       const response = await axios.get(`${baseUrl}/opportunities`);
-      console.log("Response from  ", response)
+      console.log("Response from  ", response);
       setOpportunitiesData(response.data);
     } catch (error) {
       console.error("Opportunities error:", error);
     }
+    setLoderFlags(false);
   };
 
   useEffect(() => {
@@ -73,7 +85,7 @@ const MainPage = () => {
 
       try {
         const patientsResponse = await axios.get(`${baseUrl}/members/patients`);
-        console.log("patientsResponse",patientsResponse)
+        console.log("patientsResponse", patientsResponse);
         setPatientData(patientsResponse.data);
       } catch (error) {
         console.error("Patient ID error:", error);
@@ -83,17 +95,11 @@ const MainPage = () => {
     fetchData();
   }, [open]);
 
-  useEffect(() => {
-    // axios
-    //   .get(`${baseUrl}/members/patients`)
-    //   .then((response) => {
-    //     setPatientData(response.data);
-    //   })
-    //   .catch((error) => console.log(error, "Patient ID error"));
-  }, []);
-
   const handleFilterCardData = (cardType) => {
-      return opportunitiesData?.filter(stage => stage.current_stage === cardType) || [];
+    return (
+      opportunitiesData?.filter((stage) => stage.current_stage === cardType) ||
+      []
+    );
   };
 
   const handleOpen = () => {
@@ -124,7 +130,7 @@ const MainPage = () => {
         procedure_name: formData.procedure_name,
         patient_id: formData.patient_id,
         doctor_id: formData.doctor_id,
-        stage_history: formData.stage_history
+        stage_history: formData.stage_history,
       },
     };
     try {
@@ -160,6 +166,19 @@ const MainPage = () => {
         setOpportunitiesData={setOpportunitiesData}
         loadNextApi={loadNextApi}
       />
+      <div className="loder">
+        {loderFlags && (
+          <Oval
+            visible={true}
+            height="40"
+            width="40"
+            color="#000000"
+            ariaLabel="oval-loading"
+            wrapperStyle={{}}
+            wrapperClass=""
+          />
+        )}
+      </div>
       <div className="horizontal-layout">
         {/* Content for the first section */}
         <div className="section">
@@ -185,6 +204,7 @@ const MainPage = () => {
             setOpportunitiesData={setOpportunitiesData}
             loadNextApi={loadNextApi}
             data={handleFilterCardData("lead")}
+            flag={true}
           />
         </div>
 
@@ -210,6 +230,7 @@ const MainPage = () => {
             setOpportunitiesData={setOpportunitiesData}
             loadNextApi={loadNextApi}
             data={handleFilterCardData("qualified")}
+            flag={true}
           />
         </div>
 
@@ -234,6 +255,7 @@ const MainPage = () => {
             setOpportunitiesData={setOpportunitiesData}
             loadNextApi={loadNextApi}
             data={handleFilterCardData("booked")}
+            flag={true}
           />
         </div>
 
@@ -259,6 +281,7 @@ const MainPage = () => {
             setOpportunitiesData={setOpportunitiesData}
             loadNextApi={loadNextApi}
             data={handleFilterCardData("treated")}
+            flag={false}
           />
         </div>
       </div>
@@ -296,32 +319,41 @@ const MainPage = () => {
             value={formData.patient_id}
             onChange={(e) => handleChange("patient_id", e.target.value)}
             error={Boolean(validationErrors.patient_id)}
+            MenuProps={MenuProps}
           >
-            {patientData.length > 0 ? (
-              patientData.map((item) => (
-                <MenuItem key={item.id} value={item.id}>
-                  {item.full_name}
-                </MenuItem>
-              ))
-            ) : (
-              <MenuItem disabled>{translations["no_pat"]}</MenuItem>
-            )}
+              {patientData.length > 0 ? (
+                patientData.map((item) => (
+                  <MenuItem
+                    key={item.id}
+                    value={item.id}
+                  >
+                    {item.full_name}
+                  </MenuItem>
+                ))
+              ) : (
+                <MenuItem disabled>{translations["no_pat"]}</MenuItem>
+              )}
+
           </Select>
           {validationErrors.patient_id && (
             <div style={{ color: "red", fontSize: "0.75rem" }}>
               {validationErrors.patient_id}
             </div>
           )}
-
           <InputLabel>{translations["doc_Id"]}</InputLabel>
           <Select
             value={formData.doctor_id}
             onChange={(e) => handleChange("doctor_id", e.target.value)}
             error={Boolean(validationErrors.doctor_id)}
+            MenuProps={MenuProps}
           >
             {doctorData.length > 0 ? (
               doctorData.map((item) => (
-                <MenuItem key={item.id} value={item.id}>
+                <MenuItem
+                  key={item.id}
+                  value={item.id}
+                  style={{ maxheight: "10px" }}
+                >
                   {item.full_name}
                 </MenuItem>
               ))
