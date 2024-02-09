@@ -53,112 +53,6 @@ const MainPage = () => {
       const response = await axios.get(`${baseUrl}/opportunities`);
       console.log("Response from  ", response)
       setOpportunitiesData(response.data);
-    //     {
-    //         "id": 2,
-    //         "procedure_name": "mk",
-    //         "patient": {
-    //             "id": 2,
-    //             "full_name": "ok last",
-    //             "gender": "male",
-    //             "age": 22,
-    //             "role": "patient",
-    //             "avatar_url": null
-    //         },
-    //         "doctor": {
-    //             "id": 2,
-    //             "full_name": "ok last",
-    //             "gender": "male",
-    //             "age": 22,
-    //             "role": "patient",
-    //             "avatar_url": null
-    //         },
-    //         "stage_history": [],
-    //         "current_stage": null
-    //     },
-    //     {
-    //         "id": 3,
-    //         "procedure_name": "procedure 3",
-    //         "patient": {
-    //             "id": 1,
-    //             "full_name": "name last",
-    //             "gender": "male",
-    //             "age": 22,
-    //             "role": "patient",
-    //             "avatar_url": null
-    //         },
-    //         "doctor": {
-    //             "id": 1,
-    //             "full_name": "name last",
-    //             "gender": "male",
-    //             "age": 22,
-    //             "role": "patient",
-    //             "avatar_url": null
-    //         },
-    //         "stage_history": [],
-    //         "current_stage": null
-    //     },
-    //     {
-    //         "id": 1,
-    //         "procedure_name": "procedure",
-    //         "patient": {
-    //             "id": 1,
-    //             "full_name": "name last",
-    //             "gender": "male",
-    //             "age": 22,
-    //             "role": "patient",
-    //             "avatar_url": null
-    //         },
-    //         "doctor": {
-    //             "id": 1,
-    //             "full_name": "name last",
-    //             "gender": "male",
-    //             "age": 22,
-    //             "role": "patient",
-    //             "avatar_url": null
-    //         },
-    //         "stage_history": [
-    //             {
-    //                 "timestamp": "2024-02-07T06:58:41.267Z",
-    //                 "stage_name": "lead"
-    //             },
-    //             {
-    //                 "timestamp": "2024-02-07T06:58:45.776Z",
-    //                 "stage_name": "qualified"
-    //             },
-    //             {
-    //                 "timestamp": "2024-02-07T07:27:36.077Z",
-    //                 "stage_name": "booked"
-    //             },
-    //             {
-    //                 "timestamp": "2024-02-07T09:15:39.634Z",
-    //                 "stage_name": "treated"
-    //             }
-    //         ],
-    //         "current_stage": "treated"
-    //     },
-    //     {
-    //         "id": 4,
-    //         "procedure_name": "procedure 2",
-    //         "patient": {
-    //             "id": 1,
-    //             "full_name": "name last",
-    //             "gender": "male",
-    //             "age": 22,
-    //             "role": "patient",
-    //             "avatar_url": null
-    //         },
-    //         "doctor": {
-    //             "id": 1,
-    //             "full_name": "name last",
-    //             "gender": "male",
-    //             "age": 22,
-    //             "role": "patient",
-    //             "avatar_url": null
-    //         },
-    //         "stage_history": [],
-    //         "current_stage": null
-    //     }
-    // ]);
     } catch (error) {
       console.error("Opportunities error:", error);
     }
@@ -187,7 +81,7 @@ const MainPage = () => {
     };
 
     fetchData();
-  }, []);
+  }, [open]);
 
   useEffect(() => {
     // axios
@@ -327,7 +221,7 @@ const MainPage = () => {
             justifyContent={"space-between"}
             alignItems={"center"}
           >
-            <Typography>
+            <Typography variant="h6">
               {translations["stage3.title"]}(
               {handleFilterCardData("booked").length})
             </Typography>

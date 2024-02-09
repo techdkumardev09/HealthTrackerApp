@@ -18,8 +18,6 @@ import {
   Select,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { red } from "@mui/material/colors";
 import "./Card.css";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import EditIcon from "@mui/icons-material/Edit";
@@ -30,11 +28,8 @@ import axios from "axios";
 const CardBlock = ({
     data,
     loadNextApi,
-    setOpportunitiesData,
     opportunitiesData,
     doctorData,
-    formData,
-    handleChange,
   }) => {
     const { language } = useLanguage();
   const translations = language === "es" ? esTranslations : enTranslations;
@@ -93,8 +88,6 @@ const CardBlock = ({
   };
 
   const handleNextButton = (item) => {
-    setLoading(true);
-
     axios
       .post(`${baseUrl}/opportunities/${item.id}/update_stage_history`)
       .then((response) => {

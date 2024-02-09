@@ -25,7 +25,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import { lightBlue } from "@mui/material/colors";
 import PersonAddRoundedIcon from "@mui/icons-material/PersonAddRounded";
 import SearchIcon from "@mui/icons-material/Search";
-import RecipeReviewCard from "../card/Card";
 const Header = ({ setOpportunitiesData, loadNextApi }) => {
   const { language } = useLanguage();
   const initialFormData = {
@@ -115,7 +114,7 @@ const Header = ({ setOpportunitiesData, loadNextApi }) => {
     addMemberData.append("member[age]", formData.age);
     addMemberData.append("member[role]", formData.role);
     addMemberData.append("member[avatar]", formData.Image, "file");
-  
+    
     try {
       // Send POST request to save member data
       const response = await axios.post(`${baseUrl}/members`, addMemberData, {
